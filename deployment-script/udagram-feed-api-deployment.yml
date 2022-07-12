@@ -15,7 +15,7 @@ spec:
         app: udagram-feed-api
     spec:
       containers:
-      - image: cuongmh/udagram-api-feed:v1
+      - image: huuhiep2505/udagram-api-feed:v1
         name: udagram-feed-api
         imagePullPolicy: Always
         envFrom:

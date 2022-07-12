@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: udagram-user-api
-        image: cuongmh/udagram-api-user:v1
+        image: huuhiep2505/udagram-api-user:v1
         imagePullPolicy: Always  
         envFrom:
         - configMapRef:

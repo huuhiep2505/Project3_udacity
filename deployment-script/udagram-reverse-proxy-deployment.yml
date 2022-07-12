@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: cuongmh/reverseproxy:v1
+        image: huuhiep2505/reverseproxy:v1
         imagePullPolicy: Always                
         ports:
         - containerPort: 8080
