@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-configmap
+data:
+  POSTGRES_USERNAME: postgres
+  POSTGRES_PASSWORD: Hiep1998
+  POSTGRES_HOST: s3-database-hiepnh.chgpbroayqms.us-east-1.rds.amazonaws.com
+  POSTGRES_DB: postgres
+  AWS_BUCKET: s3-database-hiepnh
+  AWS_REGION: us-east-1f
+  AWS_PROFILE: default
+  URL: http://localhost:8100
+    
