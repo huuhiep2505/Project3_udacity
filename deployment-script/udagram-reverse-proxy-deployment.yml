@@ -15,7 +15,7 @@ spec:
         app: udagram-reverse-proxy
     spec:
       containers:
-      - name: udagram-reverse-proxy
+      - name: nginx
         image: huuhiep2505/reverseproxy:v1
         resources:
             requests:
@@ -27,3 +27,4 @@ spec:
         imagePullPolicy: Always                
         ports:
         - containerPort: 8000
+      restartPolicy: Always
