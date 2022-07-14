@@ -17,6 +17,13 @@ spec:
       containers:
       - name: udagram-user-api
         image: huuhiep2505/udagram-api-user:v1
+        resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
         imagePullPolicy: Always  
         envFrom:
         - configMapRef:
