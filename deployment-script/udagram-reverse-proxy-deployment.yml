@@ -5,7 +5,7 @@ metadata:
   labels:
     app: udagram-reverse-proxy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: udagram-reverse-proxy
@@ -26,5 +26,4 @@ spec:
               cpu: "600m"
         imagePullPolicy: Always                
         ports:
-        - containerPort: 8080
-      restartPolicy: Always
+        - containerPort: 8000
