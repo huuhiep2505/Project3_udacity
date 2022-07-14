@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram-api-user
+  name: udagram-user-api
   labels:
-    app: udagram-api-user
+    app: udagram-user-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: udagram-api-user
+      app: udagram-user-api
   template:
     metadata:
       labels:
-        app: udagram-api-user
+        app: udagram-user-api
     spec:
       containers:
-      - name: udagram-api-user
+      - name: udagram-user-api
         image: huuhiep2505/udagram-api-user:v1
         resources:
             requests:
