@@ -15,7 +15,7 @@ spec:
         app: udagram-reverse-proxy
     spec:
       containers:
-      - name: nginx
+      - name: udagram-reverse-proxy
         image: huuhiep2505/reverseproxy:v1
         resources:
             requests:
