@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram-frontend
+  name: frontend
   labels:
-    app: udagram-frontend
+    app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: udagram-frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: udagram-frontend
+        app: frontend
     spec:
       containers:
-      - name:  udagram-frontend
-        image: huuhiep2505/udagram-frontend:v6
-        imagePullPolicy: Always  
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
+        - name: frontend
+          image: huuhiep2505/udagram-frontend:v6
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "250m"
+            limits:
+              cpu: "500m"
       restartPolicy: Always

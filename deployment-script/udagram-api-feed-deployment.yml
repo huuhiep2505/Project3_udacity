@@ -1,77 +1,85 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: udagram-api-feed
+  name: backend-feed
   labels:
-    app: udagram-api-feed
+    app: backend-feed
 spec:
   replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+    type: RollingUpdate
   selector:
     matchLabels:
-      app: udagram-api-feed
+      app: backend-feed
   template:
     metadata:
       labels:
-        app: udagram-api-feed
+        app: backend-feed
     spec:
       containers:
-      - image: huuhiep2505/udagram-api-feed:v1
-        name: udagram-api-feed
-        resources:
+        - name: backend-feed
+          image: huuhiep2505/udagram-api-feed:v1
+          imagePullPolicy: Always
+          resources:
             requests:
-              memory: "64Mi"
               cpu: "250m"
             limits:
-              memory: "2048Mi"
-              cpu: "600m"
-        imagePullPolicy: Always
-        envFrom:
-        - configMapRef:
-            name: env-config
-        env:
-        - name: POSTGRES_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRES_USERNAME 
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRES_PASSWORD
-        - name: POSTGRES_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRES_HOST
-        - name: POSTGRES_DB
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: POSTGRES_DB
-        - name: AWS_BUCKET
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_BUCKET
-        - name: AWS_REGION
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_REGION
-        - name: AWS_PROFILE
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_PROFILE
-        - name: JWT_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_PROFILE
-        - name: URL
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: URL
+              cpu: "500m"
+          env:
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: POSTGRES_HOST
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: POSTGRES_DB
+            - name: AWS_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: AWS_BUCKET
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: AWS_REGION
+            - name: AWS_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: AWS_PROFILE
+            - name: JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: JWT_SECRET
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: env-configmap
+                  key: URL
+          volumeMounts:
+            - name: aws-secret
+              mountPath: "/root/.aws/"
+              readOnly: true
       restartPolicy: Always
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret
